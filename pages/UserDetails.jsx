@@ -39,7 +39,7 @@ export function UserDetails() {
         <h1>hello {user.fullname}</h1>
         <h3>balance:{user.balance}</h3>
         {!isEdit &&<button onClick={()=> SetIsEdit(true)}>Edit</button>}
-        {user.activities && user.activities.length && <section>
+        {user.activities && user.activities.length<0 && <section>
             <h3>activities:</h3>
             <ActivitiesList user={user}/>
             </section>

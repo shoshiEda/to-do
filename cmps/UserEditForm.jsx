@@ -16,6 +16,7 @@ export function UserEditForm({user,editUserPrefs,closeEdit}){
     }
 
     return (
+        <fieldset>
         <form className="update-user-form" onSubmit={handleSubmit}>
             <label htmlFor="fullname">full name:</label>
             <input
@@ -47,5 +48,6 @@ export function UserEditForm({user,editUserPrefs,closeEdit}){
             <button>submit</button>
             </div>
         </form>
+        </fieldset>
     )
 }
