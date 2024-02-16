@@ -1,0 +1,31 @@
+.app-header {
+    background-color: var(--clr1);
+    color: var(--clr1bg-light);
+
+}
+
+.app-header section:first-child {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.app-header .app-nav {
+    display: flex;
+    gap: 1em;
+}
+
+.app-header a.active {
+    color: var(--clr2bg);
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+
+
+@media (max-width: 720px) {
+    .app-header {
+        color: var(--clr2bg);
+    }
+}
