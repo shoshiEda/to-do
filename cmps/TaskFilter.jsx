@@ -36,22 +36,24 @@ export function TaskFilter({ filterBy, onSetFilter }) {
         setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
     }
 
-
+  
     const { txt, status } = filterByToEdit
     return (
         <section className="task-filter full">
-            <h2>Filter Our Tasks</h2>
+            <fieldset>
+                <legend>Filter Our Tasks</legend>
             <form onSubmit={onSetFilterBy} >
                 <label htmlFor="txt">search a task: </label>
                 <input value={txt} onChange={handleChange} type="text" id="txt" name="txt" />
 
-                <select>
-                    <option value={'all'} onChange={handleChange} name="status" >All</option>
-                    <option value={'active'} onChange={handleChange} name="status" >Active only</option>
-                    <option value={'done'} onChange={handleChange} name="status" >Done only</option>
+                <select value={status} onChange={handleChange} name="status">
+                    <option value={'all'} >All</option>
+                    <option value={'active'}>Active only</option>
+                    <option value={'done'}>Done only</option>
                 </select>
-                <button>Submit</button>
             </form>
+            </fieldset>
+
         </section>
     )
 }

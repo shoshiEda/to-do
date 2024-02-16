@@ -9,13 +9,15 @@
 @import "base/forms.css";
 
 /* Pages */
-@import "pages/about.css";
+@import "pages/user-details.css";
+@import "pages/task-index.css";
+
 
 /* Components */
 @import "cmps/app-header.css";
 @import "cmps/user-msg.css";
-@import "cmps/car-filter.css";
-@import "cmps/car-list.css";
-@import "cmps/car-preview.css";
-@import "cmps/car-details.css";
-@import "cmps/car-edit.css";
+@import "cmps/task-filter.css";
+@import "cmps/task-list.css";
+@import "cmps/task-preview.css";
+@import "cmps/task-details.css";
+@import "cmps/task-edit.css";

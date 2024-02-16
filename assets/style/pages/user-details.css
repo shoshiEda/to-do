@@ -1,0 +1,27 @@
+
+.user-details{
+    height:100%;
+    margin: 0;
+}
+
+.update-user-form{
+    background-color: lightblue;
+    padding: 1rem;
+    
+}
+
+.update-user-form input{
+    margin-block: 0.5rem;
+    
+}
+
+.update-user-form label{
+    margin-inline-start: 50%;
+    translate: -50%;
+}
+
+.update-user-form .btns{
+    margin-inline-start: 50%;
+
+}
+

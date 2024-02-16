@@ -1,31 +1,18 @@
 .app-header {
     background-color: var(--clr1);
-    color: var(--clr1bg-light);
+    color: var(--clr2);
 
 }
 
-.app-header section:first-child {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.app-header h1{
+    margin-inline-start: 1rem;
 }
 
-
-.app-header .app-nav {
-    display: flex;
-    gap: 1em;
-}
-
-.app-header a.active {
-    color: var(--clr2bg);
-    font-weight: 600;
+.app-header .link{
     text-decoration: underline;
 }
 
-
-
-@media (max-width: 720px) {
-    .app-header {
-        color: var(--clr2bg);
-    }
+.app-header .link:hover{
+    color:blue;
 }
+

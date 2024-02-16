@@ -42,6 +42,7 @@ function save(task) {
     if (task.id) {
         return storageService.put(TASK_KEY, task)
     } else {
+       task= _createTask(task.txt)
         return storageService.post(TASK_KEY, task)
     }
 }
@@ -58,7 +59,7 @@ function _createTasks() {
     let tasks = utilService.loadFromStorage(TASK_KEY)
     if (!tasks || !tasks.length) {
         tasks = []
-        tasks.push(_createTask('di this'))
+        tasks.push(_createTask('do this'))
         tasks.push(_createTask('do that'))
         tasks.push(_createTask('lalala'))
       

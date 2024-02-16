@@ -1,22 +1,25 @@
-import { carService } from "../services/car.service.js"
-const { useParams, useNavigate, Link } = ReactRouterDOM
+import { taskService } from "../services/task.service.js"
+import { userService } from '../services/user.service.js'
 
+const { useParams, useNavigate, Link } = ReactRouterDOM
 const { useState, useEffect } = React
 
 export function TaskDetails() {
 
-    const [car, setCar] = useState(null)
+    const [task, setTask] = useState(null)
     const params = useParams()
     const navigate = useNavigate()
+    const user =userService.getLoggedinUser() || null
+
 
     useEffect(() => {
-        loadCar()
-    }, [params.carId])
+        loadTask()
+    }, [params.taskId])
 
 
-    function loadCar() {
-        carService.get(params.carId)
-            .then(car => setCar(car))
+    function loadTask() {
+        taskService.get(params.taskId)
+            .then(task => setTask(task))
             .catch(err => {
                 console.log('err:', err)
                 navigate('/')
@@ -24,20 +27,19 @@ export function TaskDetails() {
     }
 
     function onBack() {
-        navigate('/car')
-        // navigate(-1)
+        navigate('/')
+       
     }
 
     console.log('Render');
 
-    if (!car) return <div>Loading...</div>
+    if (!task) return <div>Loading...</div>
     return (
-        <section className="car-details">
-            <h1>Car Vendor: {car.vendor}</h1>
-            <h1>Car Speed: {car.maxSpeed}</h1>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis quae fuga eveniet, quisquam ducimus modi optio in alias accusantium corrupti veritatis commodi tenetur voluptate deserunt nihil quibusdam. Expedita, architecto omnis?</p>
-            <button onClick={onBack}>Back</button>
-            <Link to={`/car/u4QgwL`}>Next Car</Link>
+        <section style={user?{backgroundColor:user.prefs.bgcolor,color:user.prefs.color}:{}} className="task-details">
+            <h1>Task: {task.txt}</h1>
+            <p>Created at: {new Date(task.createdAt).toLocaleString()}</p>
+            <p>status:{task.isActive? 'Active' : 'Done'}</p>
+            <button onClick={onBack}><i className="fa-solid fa-rotate-left"></i></button>
         </section>
     )
 }

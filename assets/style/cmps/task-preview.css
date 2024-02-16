@@ -1,0 +1,14 @@
+ .task-preview{
+  margin-block-start: 1rem;
+  cursor: pointer;
+}
+
+ .task-preview:hover{
+    text-decoration: line-through;
+}
+
+.Done{
+  text-decoration: line-through;
+
+}
+

@@ -1,7 +1,10 @@
 
 
-export function TaskPreview({ task }) {
+export function TaskPreview({ task , onToggleStatus }) {
+
+const dynClass=task.isActive? 'Active' : 'Done'
+
     return (
-            <p className="task-preview">{task.txt}</p>          
+<p onClick={()=>onToggleStatus(task)} className={dynClass+' task-preview'}> 📝{ task.txt}</p>          
     )
 }
