@@ -1,7 +1,11 @@
 
 .user-details{
     height:100%;
+}
+
+.user-details h1{
     margin: 0;
+
 }
 
 .update-user-form{
