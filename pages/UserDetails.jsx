@@ -1,23 +1,29 @@
 const { useState } = React
 const { Link, useParams } = ReactRouterDOM
+const { useSelector, useDispatch } = ReactRedux
+
 
 import { userService } from '../services/user.service.js'
 import { showErrorMsg } from '../services/event-bus.service.js'
 import { ActivitiesList } from '../cmps/ActivitiesList.jsx'
 import { UserEditForm } from '../cmps/UserEditForm.jsx'
+import { UPDATE_USER, SET_USER } from '../store/store.js'
+
 
 
 
 export function UserDetails() {
 
-    const [user,setUser] = useState(userService.getLoggedinUser())
+    const user = useSelector(storeState => storeState.loggedinUser)
     const { userId } = useParams()
     const [isEdit,SetIsEdit] = useState(false)
+    const dispatch = useDispatch()
+
 
  
     function editUserPrefs(credentials){
         userService.editUserDelails(credentials)
-        .then(setUser)
+        .then((user)=>dispatch({ type: SET_USER, user }))
         .then(closeEdit)
     }
 

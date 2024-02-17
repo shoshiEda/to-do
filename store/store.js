@@ -9,7 +9,6 @@ export const UPDATE_TASK = 'UPDATE_TASK'
 
 /// user
 export const SET_USER = 'SET_USER'
-export const ADD_USER = 'ADD_USER'
 export const UPDATE_USER = 'UPDATE_USER'
 
 const initialState = {
@@ -42,8 +41,6 @@ function appReducer(state = initialState, action = {}) {
 
         // user
         case SET_USER:
-            return { ...state, loggedinUser: action.user }
-        case ADD_USER:
             return { ...state, loggedinUser: action.user }
 
         case UPDATE_USER:

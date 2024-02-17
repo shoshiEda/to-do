@@ -83,7 +83,7 @@ export function TaskIndex() {
         setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
     }
    
-    console.log(tasks)
+    
 
     if (!tasks || !tasks.length) return <div>Loading...</div>
     return (

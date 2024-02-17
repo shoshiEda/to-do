@@ -1,4 +1,5 @@
 import { storageService } from './async-storage.service.js'
+import { utilService } from './util.service.js'
 
 export const userService = {
     login,
@@ -52,14 +53,16 @@ function getEmptyCredentials() {
 }
 
 function editUserDelails(cardentials){
-    let user = getLoggedinUser()
+    const logUser = getLoggedinUser()
+    const fullUsers = utilService.loadFromStorage(KEY) 
+    let fullUser=fullUsers.find(user=>user.id===logUser.id)
     if(cardentials.fullname)
-    user.fullname=cardentials.fullname
+    fullUser.fullname=cardentials.fullname
     if(cardentials.color)
-    user.prefs.color=cardentials.color
+    fullUser.prefs.color=cardentials.color
     if(cardentials.bgcolor)
-    user.prefs.bgcolor=cardentials.bgcolor
-    return storageService.put(KEY, user)
+    fullUser.prefs.bgcolor=cardentials.bgcolor
+    return storageService.put(KEY, fullUser)
         .then(_setLoggedinUser)
 }
 
