@@ -1,10 +1,15 @@
 
 const { useState, useEffect } = React
 
+import { taskService } from "../services/task.service.js"
 
-export function TaskFilter({ filterBy, onSetFilter }) {
 
-    const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
+
+export function TaskFilter({ onSetFilter }) {
+
+   
+
+    const [filterByToEdit, setFilterByToEdit] = useState(taskService.getDefaultFilter())
 
     useEffect(() => {
         onSetFilter(filterByToEdit)

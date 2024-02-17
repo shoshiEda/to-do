@@ -5,11 +5,11 @@ export function TaskList({ tasks, onRemoveTask ,onEditTask,onToggleStatus,user=n
         <ul className="task-list">
             {tasks.map(task =>
                 <li className="flex justify-between align-center" key={task.id}>
-                    <TaskPreview task={task} onToggleStatus={onToggleStatus} />
+                    {<TaskPreview task={task} onToggleStatus={onToggleStatus} />}
                     <section>
-                        {user && <button onClick={() => onRemoveTask(task.id)}><i className="fa-solid fa-trash-can"></i></button>}
+                        {user && <button onClick={() => onRemoveTask(task.id,task.txt)}><i className="fa-solid fa-trash-can"></i></button>}
                         <button><Link to={`/task/${task.id}`}><i className="fa-solid fa-circle-info"></i></Link></button>
-                        {user &&<button onClick={() => onEditTask(task.id)}><i className="fa-solid fa-pen-to-square"></i></button>}
+                        {user &&<button onClick={() => onEditTask(task)}><i className="fa-solid fa-pen-to-square"></i></button>}
                     </section>
                 </li>
             )}

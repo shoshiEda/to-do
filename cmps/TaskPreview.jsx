@@ -2,6 +2,7 @@
 
 export function TaskPreview({ task , onToggleStatus }) {
 
+
 const dynClass=task.isActive? 'Active' : 'Done'
 
     return (

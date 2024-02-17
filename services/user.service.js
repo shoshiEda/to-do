@@ -63,17 +63,19 @@ function editUserDelails(cardentials){
         .then(_setLoggedinUser)
 }
 
-function addActivity(action,user){
+function addActivity(action,user,task){
     let newActivity
     if(action==='remove')
-    newActivity={txt: 'User Removed Todo', at:Date.now()}
+    newActivity={txt: `User Removed Todo: ${task}`, at:Date.now()}
     if(action==='update')
-    newActivity={txt: 'User updated Todo', at:Date.now()}
+    newActivity={txt: `User updated Todo: ${task}`, at:Date.now()}
     if(action==='add')
-    newActivity={txt: 'User added Todo', at:Date.now()}
+    newActivity={txt: `User added Todo: ${task}`, at:Date.now()}
   
-
+    
     user.activities.push(newActivity)
+   
+
     return storageService.put(KEY, user)
     .then(_setLoggedinUser)
 }

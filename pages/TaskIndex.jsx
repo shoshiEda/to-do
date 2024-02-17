@@ -1,20 +1,23 @@
-const { Link } = ReactRouterDOM
+const { useState, useEffect } = React
+const { useSelector, useDispatch } = ReactRedux
+
+
 
 import { TaskFilter } from "../cmps/TaskFilter.jsx"
 import { TaskList } from "../cmps/TaskList.jsx"
 import { taskService } from "../services/task.service.js"
-import { showSuccessMsg } from "../services/event-bus.service.js"
+import { showSuccessMsg,showErrorMsg } from "../services/event-bus.service.js"
 import { userService } from '../services/user.service.js'
+import { ADD_TASK, REMOVE_TASK, SET_TASKS, UPDATE_TASK } from '../store/store.js'
 
-
-const { useState, useEffect } = React
 
 export function TaskIndex() {
+    const dispatch = useDispatch()
 
-    const [tasks, setTasks] = useState(null)
+
+    const tasks = useSelector(storeState => storeState.tasks)
     const [filterBy, setFilterBy] = useState(taskService.getDefaultFilter())
-    const user =userService.getLoggedinUser() || null
-
+    const user = useSelector(storeState => storeState.loggedinUser)
 
     useEffect(() => {
         loadTasks()
@@ -23,22 +26,24 @@ export function TaskIndex() {
 
     function loadTasks() {
         taskService.query(filterBy)
-            .then(tasks => setTasks(tasks))
-            .catch(err => console.log('err:', err))
-    }
+            .then(tasks =>dispatch({ type: SET_TASKS, tasks }))
+            .catch(err => {
+                console.log('err:', err)
+                showErrorMsg(`Error:`,err)
+            }) }
 
-    function onRemoveTask(taskId) {
+    function onRemoveTask(taskId,txt) {
         if(!user) return
         taskService.remove(taskId)
             .then(() => {
-                userService.addActivity('remove',user)
-                .then(()=> { setTasks(prevTasks => {
-                    return prevTasks.filter(task => task.id !== taskId)
-                })
-                showSuccessMsg(`Task successfully removed!`)})
-               
+                userService.addActivity('remove',user,txt)
+                .then(dispatch({ type: REMOVE_TASK, taskId }))
+                .then(showSuccessMsg(`Task successfully removed!`))            
             })
-            .catch(err => console.log('err:', err))
+            .catch(err => {
+                console.log('err:', err)
+                showErrorMsg(`Error:`,err)
+            })
 
     }
 
@@ -48,15 +53,28 @@ export function TaskIndex() {
         .then(loadTasks)
     }
 
-    function onEditTask(taskId=0){
+    function onEditTask(task=null){
         const txt=prompt('what is the task?')
         if(!txt) return
-        taskService.save({txt,id:taskId})
-        .then(()=>{
-            if(taskId)        userService.addActivity('update',user)
-            if(!taskId)        userService.addActivity('add',user)
+        taskService.save({txt,task})
+        .then((newTask)=>{
+            if(task) {
+                userService.addActivity('update',user,txt)
+                .then(() => {
+                    dispatch({type: UPDATE_TASK,newTask})
+                })
+            } else {
+                userService.addActivity('add',user,txt)
+                .then(() => {
+                    dispatch({type: ADD_TASK,newTask})
+                })
+            }
         })
         .then(loadTasks)
+        .catch(err => {
+            console.log('err:', err)
+            showErrorMsg(`Error:`,err)
+        })
     }
 
 
@@ -64,13 +82,14 @@ export function TaskIndex() {
        
         setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
     }
+   
+    console.log(tasks)
 
-    const { txt , status } = filterBy
-    if (!tasks) return <div>Loading...</div>
+    if (!tasks || !tasks.length) return <div>Loading...</div>
     return (
         <section style={user?{backgroundColor:user.prefs.bgcolor,color:user.prefs.color}:{}} className="task-index ">
             <h1>What is there to do?</h1>
-            <TaskFilter filterBy={{ txt, status }} onSetFilter={onSetFilter} />
+            {<TaskFilter onSetFilter={onSetFilter} />}
             {user && <button onClick={() => onEditTask()}>Add</button>}
             {!tasks.length && <div>There are no tasks yet</div>}
 
