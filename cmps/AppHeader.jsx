@@ -1,11 +1,12 @@
 import { UserMsg } from './UserMsg.jsx'
 import { LoginSignup } from './LoginSignup.jsx'
 import { userService } from '../services/user.service.js'
-import { showErrorMsg } from '../services/event-bus.service.js'
-import { UPDATE_USER, SET_USER } from '../store/store.js'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
+import { SET_USER } from '../store/reducers/user.reducer.js'
+import { logout } from '../store/actions/user.actions.js'
 
 
-const { Link, NavLink } = ReactRouterDOM
+const { Link } = ReactRouterDOM
 const { useState } = React
 const { useNavigate } = ReactRouter
 const { useSelector, useDispatch } = ReactRedux
@@ -17,22 +18,19 @@ export function AppHeader() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const user = useSelector(storeState => storeState.loggedinUser)
+    const user = useSelector(storeState => storeState.userModule.loggedinUser)
 
     function onLogout() {
-        userService.logout()
+        logout()
             .then(()=>{
-                onSetUser(null)
+                showSuccessMsg('user successfully logged out')
             })
             .catch((err) => {
                 showErrorMsg('OOPs try again')
             })
     }
 
-    function onSetUser(user) {
-        dispatch({ type: SET_USER, user })
-        navigate('/')
-    }
+
 
     return (
         <header className="app-header full flex justify-between align-center">
@@ -48,7 +46,7 @@ export function AppHeader() {
                 </ section >
             ) : (
                 <section>
-                    <LoginSignup onSetUser={onSetUser} />
+                    <LoginSignup />
                 </section>
             )}
             <UserMsg />

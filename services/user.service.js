@@ -62,6 +62,7 @@ function editUserDelails(cardentials){
     fullUser.prefs.color=cardentials.color
     if(cardentials.bgcolor)
     fullUser.prefs.bgcolor=cardentials.bgcolor
+    
     return storageService.put(KEY, fullUser)
         .then(_setLoggedinUser)
 }

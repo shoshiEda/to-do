@@ -7,14 +7,14 @@ import { userService } from '../services/user.service.js'
 import { showErrorMsg } from '../services/event-bus.service.js'
 import { ActivitiesList } from '../cmps/ActivitiesList.jsx'
 import { UserEditForm } from '../cmps/UserEditForm.jsx'
-import { UPDATE_USER, SET_USER } from '../store/store.js'
+import { SET_USER } from '../store/reducers/user.reducer.js'
 
 
 
 
 export function UserDetails() {
 
-    const user = useSelector(storeState => storeState.loggedinUser)
+    const user = useSelector(storeState => storeState.userModule.loggedinUser)
     const { userId } = useParams()
     const [isEdit,SetIsEdit] = useState(false)
     const dispatch = useDispatch()

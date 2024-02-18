@@ -38,13 +38,11 @@ function remove(taskId) {
     return storageService.remove(TASK_KEY, taskId)
 }
 
-function save({txt,task}) {
-    console.log(txt,task)
-    if (task) {
-        task.txt=txt
+function save(task) {
+    if (task.id) {
         return storageService.put(TASK_KEY, task)
     } else {
-       task= _createTask(txt)
+       task= _createTask(task)
         return storageService.post(TASK_KEY, task)
     }
 }

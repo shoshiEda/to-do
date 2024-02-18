@@ -3,8 +3,30 @@ export const utilService = {
     makeLorem,
     getRandomIntInclusive,
     loadFromStorage,
-    saveToStorage
+    saveToStorage,
+    calcTime
 }
+
+function calcTime(time){
+    const timeDifference = Date.now()-time
+    const yearsDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24 * 30*12));
+    if(yearsDifference>0) return new Date(date).toLocaleString()
+    const monthsDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24 * 30));
+    if(monthsDifference===1) return `1 month ago`
+    if(monthsDifference>0) return `${monthsDifference} months ago`
+    const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24))
+    if(daysDifference===1) return `1 day ago`
+    if(daysDifference>0) return `${daysDifference} days ago`
+    const hoursDifference = Math.floor(timeDifference / (1000 * 60 * 60))
+    if(hoursDifference===1) return `1 hour ago`
+    if(hoursDifference>0) return `${hoursDifference} hours ago`
+    const minutesDifference = Math.floor(timeDifference / (1000 * 60 ))
+    if(minutesDifference===1) return `1 minute ago`
+    if(minutesDifference>0) return `${minutesDifference} minutes ago`
+    if(minutesDifference===0) return `just now`
+
+}
+
 
 function makeId(length = 6) {
     var txt = ''
